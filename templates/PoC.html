@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en"">
+<head>
+  <title>David Controller PoC</title>
+</head>
+<body>
+  <form>
+    <input type="radio" name="address" value="128-1" checked>128-1<br>
+    <input type="radio" name="address" value="128-2">128-2<br>
+    <input type="radio" name="address" value="129-1">129-1<br>
+    <input type="radio" name="address" value="129-2">129-2<br><br>
+
+    <input id="slider1" type="range" min="-127" max="127" step="1" value="0"
+           oninput="postValue('slider1','rangeValue1')"
+           onmouseup="snapToZero('slider1','rangeValue1')"/>
+    <input id="rangeValue1" size="10" type="text", value="0">
+  </form>
+
+  <script>
+    function postValue(sliderID, textbox) {
+        var t = document.getElementById(textbox);
+        var s = document.getElementById(sliderID);
+        var r = getControllerAddress();
+        t.value = s.value.concat(' ' + r);
+    }
+    function snapToZero(sliderID, textbox) {
+      var t = document.getElementById(textbox);
+      var s = document.getElementById(sliderID);
+      t.value = 0;
+      var n = document.createElement("INPUT");
+      for (i = 0; i < s.attributes.length; i++)
+      {
+        var name = s.attributes[i].name;
+        if (name=="value")
+        {
+          n.setAttribute("value", "0");
+        }
+        else
+        {
+          n.setAttribute(name, s.attributes[i].value);
+        }
+      }
+      var parent = s.parentNode;
+      parent.replaceChild(n, s);
+    }
+
+    function getControllerAddress()
+    {
+      var radios = document.getElementsByName('address');
+
+      for (var i = 0, length = radios.length; i < length; i++)
+      {
+        if (radios[i].checked)
+        {
+          return radios[i].value;
+        }
+      }
+    }
+  </script>
+</body>
+</html>
