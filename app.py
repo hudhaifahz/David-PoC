@@ -1,4 +1,4 @@
-from flask import Flask, abort, request, render_template
+from flask import Flask, request, render_template, redirect, url_for, jsonify
 
 app = Flask(__name__)
 
@@ -6,10 +6,11 @@ app = Flask(__name__)
 def index():
     return render_template('PoC.html')
 
-@app.route('/motor/<motorAddress>', methods=['POST'])
-def signUpUser(motorAddress):
-        slider = request.form['slider1'];
-        return render_template('PoC.html');
+@app.route('/motor/<address>', methods=['POST'])
+def applySpeed(address):
+        speed = request.json['speed']
+        print(speed)
+        return ''
 
 if __name__ == '__main__':
     app.run(debug=True)
