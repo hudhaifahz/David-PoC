@@ -11,7 +11,11 @@
     <input type="radio" name="address" value="129/1">129-1<br>
     <input type="radio" name="address" value="129/2">129-2<br><br>
 
-    <input id="speed" type="range" min="-127" max="127" step="1" value="0" oninput="postValue('speed','feedback')" onmouseup="snapToZero('speed','feedback')"/>
+    <input id="speed" type="range" min="-127" max="127" step="1" value="0" 
+    	oninput="postValue('speed','feedback')" 
+    	onmouseup="snapToZero('speed','feedback')"
+    	ontouchend="snapToZero('speed','feedback')"
+    	ontouchcancel="snapToZero('speed','feedback')"/>
     <input id="feedback" size="10" type="text" value="0">
   </form>
 
@@ -44,6 +48,7 @@
       }
       var parent = s.parentNode;
       parent.replaceChild(n, s);
+      postValue(sliderId, textbox);
     }
 
     function post(path, cmAddress, speed) 
