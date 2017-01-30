@@ -19,12 +19,12 @@ def index():
 def applySpeed(controllerAddress, motorAddress):
     speed = request.json['speed']
     print(controllerAddress, ' ', motorAddress, ' ', speed)
-    if (motorAddress == '1'):
+    if (motorAddress == 1):
         if (speed >= 0):
             doCommand(controllerAddress, ForwardMotor1, speed)
         else:
             doCommand(controllerAddress, BackwardsMotor1, abs(speed))
-    elif (motorAddress == '2'):
+    elif (motorAddress == 2):
         if (speed >= 0):
             doCommand(controllerAddress, ForwardMotor2, speed)
         else:
