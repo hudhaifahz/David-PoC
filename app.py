@@ -15,21 +15,20 @@ app = Flask(__name__)
 def index():
     return render_template('PoC.html')
 
-@app.route('/motor/<controllerAddress>/<motorAddress>', methods=['POST'])
+@app.route('/motor/<int:controllerAddress>/<int:motorAddress>', methods=['POST'])
 def applySpeed(controllerAddress, motorAddress):
     speed = request.json['speed']
-    address = int(controllerAddress)
-    print(address, ' ', motorAddress, ' ', speed)
+    print(controllerAddress, ' ', motorAddress, ' ', speed)
     if (motorAddress == '1'):
         if (speed >= 0):
-            doCommand(address, ForwardMotor1, speed)
+            doCommand(controllerAddress, ForwardMotor1, speed)
         else:
-            doCommand(address, BackwardsMotor1, abs(speed))
+            doCommand(controllerAddress, BackwardsMotor1, abs(speed))
     elif (motorAddress == '2'):
         if (speed >= 0):
-            doCommand(address, ForwardMotor2, speed)
+            doCommand(controllerAddress, ForwardMotor2, speed)
         else:
-            doCommand(address, BackwardsMotor2, abs(speed))
+            doCommand(controllerAddress, BackwardsMotor2, abs(speed))
         
     return ''
 

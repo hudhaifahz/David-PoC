@@ -5,7 +5,7 @@
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 </head>
 <body>
-  <form id="package" action="{{ url_for('applySpeed', controllerAddress='controllerAddress', motorAddress='motorAddress', _external=True) }}" method="post">
+
     <input type="radio" name="address" value="128/1" checked>128-1<br>
     <input type="radio" name="address" value="128/2">128-2<br>
     <input type="radio" name="address" value="129/1">129-1<br>
@@ -17,7 +17,6 @@
     	ontouchend="snapToZero('speed','feedback')"
     	ontouchcancel="snapToZero('speed','feedback')"/>
     <input id="feedback" size="10" type="text" value="0">
-  </form>
 
   <script>
     function postValue(sliderID, textbox) {
@@ -25,8 +24,7 @@
         var s = document.getElementById(sliderID);
         var r = getControllerAddress();
         t.value = s.value.concat(' ' + r);
-        var f = document.getElementById("package")
-        post(f.action, r, s.value);
+        post(r, s.value);
     }
     
     function snapToZero(sliderID, textbox) {
@@ -51,12 +49,12 @@
       postValue(sliderId, textbox);
     }
 
-    function post(path, cmAddress, speed) 
+    function post(cmAddress, speed) 
     {
         var postSpeed = new XMLHttpRequest();
         var speedParam = '{"speed":' + speed + '}';
-        var cmAddresses = cmAddress.split("/");
-        path = path.replace("controllerAddress", cmAddresses[0]).replace("motorAddress", cmAddresses[1]);
+        var path = "{{ url_for('applySpeed', controllerAddress='0', motorAddress='0', _external=True) }}";
+        path = path.replace("0/0", cmAddress);
         postSpeed.open("POST", path, false);
         postSpeed.setRequestHeader("Content-Type", "application/json");
         postSpeed.send(speedParam);
